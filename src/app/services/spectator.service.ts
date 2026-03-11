@@ -12,7 +12,7 @@ export class SpectatorService {
 
   private spectatorEndpoint = 'api/spectator';
 
-  private baseUrl = "http://localhost:8080"
+  private baseUrl = "https://caresapo-backend.onrender.com"
 
   getCurrentGame(): Observable<CurrentGame> {
     return this.http.get<CurrentGame>(`${this.baseUrl}/${this.spectatorEndpoint}`);

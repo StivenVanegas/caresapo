@@ -12,7 +12,7 @@ export class MatchService {
 
   private matchEndpoint = 'api/match';
 
-  private baseUrl = "http://localhost:8080"
+  private baseUrl = "https://caresapo-backend.onrender.com"
 
   getMatches(server: string): Observable<Match[]> {
     return this.http.get<Match[]>(`${this.baseUrl}/${this.matchEndpoint}/${server}`);

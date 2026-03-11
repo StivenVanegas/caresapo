@@ -13,7 +13,7 @@ export class TwitchService {
 
   private twitchEndpoint = 'api/twitch/live';
 
-  private baseUrl = "http://localhost:8080"
+  private baseUrl = "https://caresapo-backend.onrender.com"
 
   isLive(username: string): Observable<TwitchUser> {
     return this.http.get<TwitchUser>(`${this.baseUrl}/${this.twitchEndpoint}/${username}`);

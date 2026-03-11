@@ -12,7 +12,7 @@ export class SummonerService {
 
   private summonerEndpoint = 'api/summoner';
 
-  private baseUrl = "http://localhost:8080"
+  private baseUrl = "https://caresapo-backend.onrender.com"
 
   getSummoner(server: string): Observable<Summoner> {
     return this.http.get<Summoner>(`${this.baseUrl}/${this.summonerEndpoint}/${server}`);
