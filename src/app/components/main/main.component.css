@@ -1,0 +1,546 @@
+/* =============================================
+   CARESAPO TRACKER — Global Styles
+   Dark Gaming Theme
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap');
+
+:host {
+  display: block;
+}
+
+/* CSS Variables */
+:host, .page-wrapper {
+  --bg-base:       #0a0c10;
+  --bg-card:       #0f1318;
+  --bg-card-hover: #141920;
+  --border:        #1e2530;
+  --border-light:  #2a3444;
+  --accent:        #c8a84b;
+  --accent-dim:    #9a7e36;
+  --blue-team:     #4a9eff;
+  --red-team:      #ff4a4a;
+  --win-color:     #3fb97a;
+  --loss-color:    #e05252;
+  --text-primary:  #e8eaf0;
+  --text-secondary:#8a9ab0;
+  --text-muted:    #4a5568;
+  --live-color:    #e63946;
+}
+
+/* ---- Base ---- */
+.page-wrapper {
+  min-height: 100vh;
+  background-color: var(--bg-base);
+  background-image:
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(200,168,75,0.06) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+}
+
+/* ---- Header ---- */
+.site-header {
+  position: relative;
+  text-align: center;
+  padding: 48px 24px 40px;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.header-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(200,168,75,0.08) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.header-tag {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--accent-dim);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.site-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(42px, 6vw, 72px);
+  font-weight: 700;
+  letter-spacing: 8px;
+  color: var(--accent);
+  margin: 0 0 6px;
+  text-shadow: 0 0 40px rgba(200,168,75,0.3);
+}
+
+.site-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+/* ---- Main Layout ---- */
+.main-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---- Cards ---- */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.card:hover {
+  border-color: var(--border-light);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.5;
+}
+
+.card-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 14px 20px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ---- Loading / Error / Empty States ---- */
+.loading-state, .error-state, .empty-state {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 20px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.empty-state {
+  flex-direction: column;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-icon { font-size: 32px; }
+.error-icon { font-size: 18px; color: var(--loss-color); }
+
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border-light);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---- Twitch Card ---- */
+.twitch-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+}
+
+a.twitch-body {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a.twitch-body:hover {
+  background: rgba(145, 70, 255, 0.05); /* toque morado de Twitch al hover */
+  border-radius: 0 0 4px 4px;
+}
+
+.twitch-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.twitch-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  border: 2px solid var(--border-light);
+  display: block;
+}
+
+.live-badge {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--live-color);
+  background: rgba(230,57,70,0.15);
+  border: 1px solid rgba(230,57,70,0.3);
+  border-radius: 2px;
+  padding: 2px 8px;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.live-badge.offline {
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.04);
+  border-color: var(--border);
+}
+
+.twitch-details {
+  flex: 1;
+}
+
+.twitch-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+  line-height: 1.4;
+}
+
+.twitch-game {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 13px;
+}
+
+.detail-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.detail-value {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ---- Current Game Card ---- */
+.teams-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 0;
+  padding: 20px;
+}
+
+.team-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.team-column:last-child {
+  align-items: flex-end;
+}
+
+.team-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.team-label.team-blue { color: var(--blue-team); }
+.team-label.team-red  { color: var(--red-team); }
+
+.participant-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.team-column:last-child .participant-row {
+  flex-direction: row-reverse;
+}
+
+.champ-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 3px;
+  border: 1px solid var(--border-light);
+}
+
+.participant-name {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.vs-divider {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 28px 20px 0;
+  letter-spacing: 2px;
+}
+
+/* ---- Summoner Card ---- */
+.summoner-body {
+  padding: 0;
+}
+
+.server-select-wrap {
+  padding: 16px 20px;
+}
+
+.server-select {
+  background: var(--bg-base);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  padding: 10px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a9ab0'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  min-width: 180px;
+  transition: border-color 0.2s;
+}
+
+.server-select:focus {
+  outline: none;
+  border-color: var(--accent-dim);
+}
+
+.server-select option {
+  background: #0f1318;
+}
+
+/* Summoner Profile */
+.summoner-profile {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.summoner-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.summoner-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 4px;
+  border: 2px solid var(--accent-dim);
+  display: block;
+}
+
+.summoner-level {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #0a0c10;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.summoner-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.tag-line {
+  color: var(--text-muted);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* Tabs */
+.tabs-container {
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-nav {
+  display: flex;
+  padding: 0 20px;
+  gap: 2px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 12px 16px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.tab-btn:hover {
+  color: var(--text-secondary);
+}
+
+.tab-btn.active {
+  color: var(--accent);
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+.tab-panel {
+  padding: 20px;
+}
+
+.rank-display {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.rank-tier {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tier-badge {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 3px;
+}
+
+.rank-roman {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+}
+
+.rank-stats {
+  display: flex;
+  gap: 24px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.stat-value.accent { color: var(--accent); }
+.stat-value.win    { color: var(--win-color); }
+.stat-value.loss   { color: var(--loss-color); }
+
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px;
+  border-top: 1px solid #1e2530;
+  margin-top: 20px;
+}
+
+.footer-dev {
+  font-size: 12px;
+  color: #4a5568;
+  letter-spacing: 1px;
+}
+
+.footer-angular {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #DD0031;
+  letter-spacing: 1px;
+}
+
+.footer-separator {
+  color: #2a3444;
+  font-size: 14px;
+}
+
+.footer-contact {
+  font-size: 12px;
+  color: #4a5568;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+}
+
+.footer-contact:hover {
+  color: #c8a84b;
+}

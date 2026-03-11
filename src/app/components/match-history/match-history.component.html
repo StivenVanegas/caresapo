@@ -1,0 +1,77 @@
+<div class="match-history-wrapper">
+  <div class="section-label">Últimas Partidas</div>
+
+  <div *ngFor="let match of matches" class="match-card" [class.win]="getPlayer(match)?.win" [class.loss]="!getPlayer(match)?.win">
+
+    <div class="match-result-bar"></div>
+
+    <ng-container *ngIf="getPlayer(match) as player">
+
+      <!-- Main player info -->
+      <div class="match-player">
+
+        <!-- Campeón + Hechizos -->
+        <div class="champ-portrait-wrap">
+          <img class="champ-portrait" [src]="player.championImageUrl" [alt]="player.championName">
+          <div class="summoner-spells">
+            <img class="spell-icon" [src]="player.summoner1Img" title="Summoner 1">
+            <img class="spell-icon" [src]="player.summoner2Img" title="Summoner 2">
+          </div>
+        </div>
+
+        <!-- Nombre, KDA, resultado -->
+        <div class="match-player-info">
+          <span class="champ-name">{{ player.championName }}</span>
+          <span class="kda">{{ player.kills }} / <span class="deaths">{{ player.deaths }}</span> / {{ player.assists }}</span>
+          <span class="result-tag" [class.win]="player.win">{{ player.win ? 'Victoria' : 'Derrota' }}</span>
+
+          <!-- Items -->
+          <div class="items-row">
+            <ng-container *ngFor="let itemId of getItems(player)">
+              <img
+                *ngIf="itemId > 0"
+                class="item-icon"
+                [src]="getItemUrl(itemId)"
+                [title]="'Item ' + itemId"
+              >
+              <div *ngIf="itemId === 0" class="item-empty"></div>
+            </ng-container>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Teams -->
+      <div class="match-teams">
+
+        <div class="match-team">
+          <div class="team-players">
+            <div
+              *ngFor="let p of getTeam(match, 100)"
+              class="team-player"
+              [class.highlight]="p.puuid === summonerPuuid"
+            >
+              <img class="team-champ-icon" [src]="p.championImageUrl" [alt]="p.riotIdGameName">
+              <span class="team-player-name">{{ p.riotIdGameName }}<span class="team-player-tag">#{{ p.riotIdTagline }}</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="match-team">
+          <div class="team-players">
+            <div
+              *ngFor="let p of getTeam(match, 200)"
+              class="team-player"
+              [class.highlight]="p.puuid === summonerPuuid"
+            >
+              <img class="team-champ-icon" [src]="p.championImageUrl" [alt]="p.riotIdGameName">
+              <span class="team-player-name">{{ p.riotIdGameName }}<span class="team-player-tag">#{{ p.riotIdTagline }}</span></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,178 @@
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-bg"></div>
+    <div class="header-content">
+      <div class="header-title-block">
+        <span class="header-tag">// TRACKER</span>
+        <h1 class="site-title">CARESAPO</h1>
+        <p class="site-subtitle">El mejor Heimerdinger del Caquetá</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- Twitch Info -->
+    <section class="card twitch-card">
+      <div class="card-label">Información de Twitch</div>
+
+      <div *ngIf="isLoadingTwitchUser" class="loading-state">
+        <div class="spinner"></div>
+        <span>Conectando con Twitch...</span>
+      </div>
+
+      <div *ngIf="errorTwitchUser" class="error-state">
+        <span class="error-icon">⚠</span> Sin datos de Twitch
+      </div>
+
+      <a *ngIf="twitchUserInfo && !isLoadingTwitchUser" class="twitch-body"
+          href="https://www.twitch.tv/caresapo"
+          target="_blank"
+          rel="noopener noreferrer">
+        
+        <div class="twitch-avatar-wrap">
+          <img class="twitch-avatar" [src]="imgUrlTwitchUser" alt="Avatar">
+          <span class="live-badge" [class.offline]="!twitchUserInfo.online">
+            {{ twitchUserInfo.online ? '● EN VIVO' : '○ Offline' }}
+          </span>
+        </div>
+        <div class="twitch-details">
+          <p class="twitch-title">{{ twitchUserInfo.title }}</p>
+          <p class="twitch-game">
+            <span class="detail-label">Game</span>
+            <span class="detail-value">{{ twitchUserInfo.game_name }}</span>
+          </p>
+        </div>
+      </a>
+    </section>
+
+    <!-- Current Game -->
+    <section class="card game-card">
+      <div class="card-label">Partida en Vivo</div>
+
+      <div *ngIf="isLoadingCurrentGame" class="loading-state">
+        <div class="spinner"></div>
+        <span>Buscando partida activa...</span>
+      </div>
+
+      <div *ngIf="errorCurrentGame" class="empty-state">
+        <span class="empty-icon">🎮</span>
+        <p>No hay partida en curso</p>
+      </div>
+
+      <div *ngIf="currentGame && !isLoadingCurrentGame" class="teams-grid">
+        <div class="team-column">
+          <div class="team-label team-blue">TEAM 1</div>
+          <div class="participant-row" *ngFor="let p of currentGameTeam1">
+            <img class="champ-icon" [src]="p.championImageUrl" [alt]="p.riotId">
+            <span class="participant-name">{{ p.riotId }}</span>
+          </div>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="team-column">
+          <div class="team-label team-red">TEAM 2</div>
+          <div class="participant-row" *ngFor="let p of currentGameTeam2">
+            <img class="champ-icon" [src]="p.championImageUrl" [alt]="p.riotId">
+            <span class="participant-name">{{ p.riotId }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Summoner Info -->
+    <section class="card summoner-card">
+      <div class="card-label">Seleccionar Región</div>
+
+      <div class="server-select-wrap">
+        <select
+          [(ngModel)]="selectedServer"
+          (ngModelChange)="onServerChange($event)"
+          class="server-select">
+          <option value="">— Región —</option>
+          <option *ngFor="let profile of profiles" [value]="profile.server">
+            {{ profile.server }}
+          </option>
+        </select>
+      </div>
+
+      <div *ngIf="isLoading" class="loading-state">
+        <div class="spinner"></div>
+        <span>Cargando invocador...</span>
+      </div>
+
+      <div *ngIf="error" class="error-state">
+        <span class="error-icon">⚠</span> {{ error }}
+      </div>
+
+      <div *ngIf="summonerInfo && !isLoading" class="summoner-body">
+        <div class="summoner-profile">
+          <div class="summoner-avatar-wrap">
+            <img class="summoner-avatar" [src]="imgUrl" alt="Profile Icon">
+            <span class="summoner-level">{{ summonerInfo.summonerLevel }}</span>
+          </div>
+          <div class="summoner-meta">
+            <h2 class="summoner-name">
+              {{ summonerInfo.gameName }}<span class="tag-line">#{{ summonerInfo.tagLine }}</span>
+            </h2>
+          </div>
+        </div>
+
+        <!-- League Tabs -->
+        <div class="tabs-container">
+          <div class="tab-nav">
+            <button
+              *ngFor="let league of summonerInfo.leagues; let i = index"
+              class="tab-btn"
+              [class.active]="activeTab === i"
+              (click)="selectTab(i)">
+              {{ league.queueType === 'RANKED_SOLO_5x5' ? 'Solo/Duo' :
+                 league.queueType === 'RANKED_FLEX_SR' ? 'Flex' : league.queueType }}
+            </button>
+          </div>
+
+          <div class="tab-panel" *ngIf="summonerInfo.leagues[activeTab] as league">
+            <div class="rank-display">
+              <div class="rank-tier">
+                <span class="tier-badge">{{ league.tier }}</span>
+                <span class="rank-roman">{{ league.rank }}</span>
+              </div>
+              <div class="rank-stats">
+                <div class="stat-item">
+                  <span class="stat-label">LP</span>
+                  <span class="stat-value accent">{{ league.leaguePoints }}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Wins</span>
+                  <span class="stat-value win">{{ league.wins }}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">Losses</span>
+                  <span class="stat-value loss">{{ league.losses }}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">WR</span>
+                  <span class="stat-value accent">
+                    {{ ((league.wins / (league.wins + league.losses)) * 100).toFixed(0) }}%
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Match History -->
+        <app-match-history [matches]="matches" [summonerPuuid]="mainPuuid"></app-match-history>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+<!-- Footer -->
+<footer class="site-footer">
+  <span class="footer-dev">Desarrollado por Nevits</span>
+  <span class="footer-separator">·</span>
+  <a href="mailto:nevits28&#64;hotmail.com" class="footer-contact">nevits28&#64;hotmail.com</a>
+</footer>
