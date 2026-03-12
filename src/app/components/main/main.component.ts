@@ -76,6 +76,9 @@ export class MainComponent implements OnInit{
   ngOnInit(): void {
     this.isLive("caresapo");
     this.getCurrentGame();
+
+    this.selectedServer = 'LAN';
+    this.onServerChange('EUW');
   }
 
   getCurrentGame(){
