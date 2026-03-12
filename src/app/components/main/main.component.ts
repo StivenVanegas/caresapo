@@ -77,7 +77,7 @@ export class MainComponent implements OnInit{
     this.isLive("caresapo");
     this.getCurrentGame();
 
-    this.selectedServer = 'LAN';
+    this.selectedServer = 'EUW';
     this.onServerChange('EUW');
   }
 
